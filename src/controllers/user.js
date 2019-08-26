@@ -49,17 +49,31 @@ module.exports = {
             role: 'pembeli',
             token: "null"
         }
-        user.registerPembeli(dataUser, dataPembeli)
-            .then((resultUser) => {
-                console.log(resultUser)
-                miscHelper.response(res, resultUser, 200)
-            })
-            .catch((err) => {
-                console.log(err)
-                return miscHelper.response(res, null, 404, "Email Not Avaliable !!!")
-            })
-    },
+        user.getByUsername(req.body.username)
+            .then((result) => {
+                console.log(result.length)
+                if (result.length > 0) {
+                    console.log('masuk')
+                    return miscHelper.response(res, null, 401, "Username Not Avaliable !!!")
+                }
+                else {
+                    user.registerPembeli(dataUser, dataPembeli)
+                        .then((resultUser) => {
+                            console.log(resultUser)
+                            miscHelper.response(res, resultUser, 200)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            return miscHelper.response(res, null, 401, "Email Not Avaliable !!!")
+                        })
+                }
 
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    },
     registerPedagang: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
         const passHash = miscHelper.setPass(req.body.password, salt)
@@ -96,15 +110,30 @@ module.exports = {
             role: 'pedagang',
             token: "null"
         }
-        user.registerPedagang(dataUser, dataPedagang)
-            .then((resultUser) => {
-                console.log(resultUser)
-                miscHelper.response(res, resultUser, 200)
+        user.getByUsername(req.body.username)
+            .then((result) => {
+                console.log(result.length)
+                if (result.length > 0) {
+                    console.log('masuk')
+                    return miscHelper.response(res, null, 401, "Username Not Avaliable !!!")
+                }
+                else {
+                    user.registerPedagang(dataUser, dataPedagang)
+                        .then((resultUser) => {
+                            console.log(resultUser)
+                            miscHelper.response(res, resultUser, 200)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            return miscHelper.response(res, null, 404, "Email Not Avaliable !!!")
+                        })
+                }
+
             })
-            .catch((err) => {
-                console.log(err)
-                return miscHelper.response(res, null, 404, "Email Not Avaliable !!!")
+            .catch((error) => {
+                console.log(error)
             })
+
     },
     login: (req, res) => {
         const username = req.body.username
@@ -119,40 +148,41 @@ module.exports = {
                     dataUser.token = jwt.sign({
                         idUser: dataUser.idUser
                     }, process.env.SECRET_KEY, {
-                            expiresIn: '120m'
+                            expiresIn: '120h'
                         })
 
                     delete dataUser.salt
                     delete dataUser.password
-                    // user.updateToken(username, dataUser.token)
-                    //     .then((result) => {
-                    //         console.log(result)
-                    //     })
-                    //     .catch((err) => {
-                    //         console.log(err)
-                    //     })
-                    console.log(dataUser.role)
-
-                    if (dataUser.role == 'pembeli') {
-                        user.getUserPembeli(username)
-                            .then((resultUser) => {
-                                return miscHelper.response(res, resultUser, 200)
-                            })
-                    }
-                    else {
-                        user.getUserPedagang(username)
-                            .then((resultUser) => {
-                                return miscHelper.response(res, resultUser, 200)
-                            })
-                    }
-
+                    return miscHelper.response(res, dataUser, 200)
                 } else {
-                    return respon.response(res, null, 403, "Wrong Password !!!")
+                    return miscHelper.response(res, null, 403, "Wrong Password !!!")
                 }
             })
             .catch((err) => {
                 console.log(err)
-                return respon.response(res, null, 403, "Email Not Register !!!")
+                return miscHelper.response(res, null, 403, "Email Not Register !!!")
             })
     },
+    getUserPembeli: (res, req) => {
+        const username = req.params.username
+        user.getUserPedagang(username)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    getUserPedagang: (res, req) => {
+        const username = req.params.username
+        user.getUserPembeli((username))
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 }
