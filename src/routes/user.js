@@ -5,20 +5,27 @@ const Auth = require('../helpers/auth')
 const multer = require('multer');
 
 	const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            console.log('masuk dest');
+            
+			cb(null, '../uploads/images')
+		},
 		filename: function (req, file, cb) {
+            console.log('masuk doang');
+
 			cb(null, file.originalname);
 		}
 	})
-	let upload = multer({ storage: storage, limits: { fileSize: 100000000 } })
+    let upload = multer({ storage: storage, limits: { fileSize: 100000000 } })
+    // ,upload.single('image')
 router
     .all('/*', Auth.authInfo)
-    // .get('/', userController.getUserById)
-    .post('/register/pembeli', userController.registerPembeli)//req body data
-    .post('/register/pedagang', userController.registerPedagang)//req body data
-    .post('/login', userController.login)//req body username dan password
-    .get('/pedagang', userController.getUserPedagang)//req body username
-    .get('/pembeli', userController.getUserPembeli)//req body username
-    .patch('/pembeli/:username',upload.single('image'), userController.updateUserPembeli)
-    .patch('/pedagang/:username', upload.single('image'),userController.updateUserPedagang)
+    .post('/register/pembeli', userController.registerPembeli)
+    .post('/register/pedagang', userController.registerPedagang)
+    .post('/login', userController.login)
+    .get('/pedagang', userController.getUserPedagang)
+    .get('/pembeli', userController.getUserPembeli)
+    .patch('/pembeli/:username', userController.updateUserPembeli)
+    .patch('/pedagang/:username', userController.updateUserPedagang)
 
 module.exports = router

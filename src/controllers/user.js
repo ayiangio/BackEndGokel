@@ -6,7 +6,6 @@ module.exports = {
     registerPembeli: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
         const passHash = miscHelper.setPass(req.body.password, salt)
-
         const dataPembeli = {
             email: req.body.email,
             nama: req.body.nama,
@@ -39,17 +38,14 @@ module.exports = {
                             return miscHelper.response(res, null, 401, "Email Not Avaliable !!!")
                         })
                 }
-
             })
             .catch((error) => {
                 console.log(error)
             })
-
     },
     registerPedagang: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
         const passHash = miscHelper.setPass(req.body.password, salt)
-
         const dataPedagang = {
             email: req.body.email,
             nama: req.body.nama,
@@ -86,12 +82,10 @@ module.exports = {
                             return miscHelper.response(res, null, 404, "Email Not Avaliable !!!")
                         })
                 }
-
             })
             .catch((error) => {
                 console.log(error)
             })
-
     },
     login: (req, res) => {
         const username = req.body.username
@@ -107,10 +101,17 @@ module.exports = {
                         idUser: dataUser.idUser
                     }, process.env.SECRET_KEY, {
                             expiresIn: '120h'
-                        })
+                    })
 
                     delete dataUser.salt
                     delete dataUser.password
+                    user.updateToken(username, dataUser.token)
+                    .then((result) => {
+                        console.log(result)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
                     return miscHelper.response(res, dataUser, 200)
                 } else {
                     return miscHelper.response(res, null, 403, "Wrong Password !!!")
@@ -122,6 +123,7 @@ module.exports = {
             })
     },
     getUserPedagang: (req, res) => {
+
         console.log(req.body.username)
         const username = req.body.username
         user.getUserPedagang(username)
@@ -145,9 +147,11 @@ module.exports = {
                 console.log(error)
             })
     },
-    updateUserPedagang: (req, res) => {
+    updateUserPedagang: async (req, res) => {
         const username = req.params.username
         let path = req.file.path
+        console.log(req.file);
+
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -170,7 +174,7 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: await geturl(),
+            foto: 'await geturl()',
         }
         user.updateUserPedagang(username, dataPedagang)
             .then((resultUser) => {
@@ -181,8 +185,10 @@ module.exports = {
                 console.log(error)
             })
     },
-    updateUserPembeli: (req, res) => {
+    updateUserPembeli: async (req, res) => {
         const username = req.params.username
+        console.log(req.file);
+        
         let path = req.file.path
         let geturl = async (req) => {
             cloudinary.config({
@@ -206,7 +212,7 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: await geturl(),
+            foto: 'await geturl()',
         }
         user.updateUserPembeli(username, dataPembeli)
             .then((resultUser) => {
