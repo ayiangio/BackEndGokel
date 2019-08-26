@@ -8,5 +8,6 @@ router
     .post('/register/pembeli', userController.registerPembeli)
     .post('/register/pedagang', userController.registerPedagang)
     .post('/login', userController.login)
+    .get('/pembeli', userController.getUserPembeli)
 
 module.exports = router

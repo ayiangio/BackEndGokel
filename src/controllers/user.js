@@ -152,8 +152,9 @@ module.exports = {
                 return miscHelper.response(res, null, 403, "Email Not Register !!!")
             })
     },
-    getUserPembeli: (res, req) => {
-        const username = req.params.username
+    getUserPembeli: (req, res) => {
+        const username = req.body.username
+        console.log(username)
         user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -165,7 +166,7 @@ module.exports = {
     },
     getUserPedagang: (res, req) => {
         const username = req.params.username
-        user.getUserPembeli((username))
+        user.getUserPedagang((username))
             .then((resultUser) => {
                 const result = resultUser
                 miscHelper.response(res, result, 200)
