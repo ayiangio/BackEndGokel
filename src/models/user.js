@@ -2,9 +2,9 @@ require('dotenv').config()
 const connection = require('../config/db')
 
 module.exports = {
-    getUserById: (id_user) => {
+    getUserByPedagang: (username) => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM user WHERE id_user = ?', id_user, (err, result) => {
+            connection.query('SELECT * FROM pedagang WHERE username = ?', id_user, (err, result) => {
                 if(!err) {
                     resolve(result)
                 } else {
@@ -12,5 +12,6 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+    getUserByPembeli: (id_user)
 }

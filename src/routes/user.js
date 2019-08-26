@@ -5,6 +5,9 @@ const Auth = require('../helpers/auth')
 
 router
     .all('/*', Auth.authInfo)
-    .get('/', userController.getUserById)
+    .get('/', userController.getUserByPedagang)
+    .get('/pedagang/:username', userController.getUserByPedagang)
+    
+    
 
 module.exports = router
