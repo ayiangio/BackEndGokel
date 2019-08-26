@@ -3,18 +3,6 @@ const miscHelper = require('../helpers/response')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
-    getUserById: (req, res) => {
-        const id_user = req.params.id_user
-        console.log(id_user)
-        user.getUserById(id_user)
-            .then((resultUser) => {
-                const result = resultUser
-                miscHelper.response(res, result, 200)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    },
     registerPembeli: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
         const passHash = miscHelper.setPass(req.body.password, salt)
@@ -40,7 +28,7 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: "null",
+            foto: 'await geturl()',
         }
         const dataUser = {
             username: req.body.username,
@@ -99,9 +87,11 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: "null",
+            foto: 'await geturl()',
             id_jajan: req.body.id_jajan,
             id_category: req.body.id_category,
+            stok:0,
+            harga : 0
         }
         const dataUser = {
             username: req.body.username,
@@ -163,8 +153,9 @@ module.exports = {
                 return miscHelper.response(res, null, 403, "Email Not Register !!!")
             })
     },
-    getUserPembeli: (res, req) => {
-        const username = req.params.username
+    getUserPedagang: (req,res) => {
+        console.log(req.body.username)
+        const username = req.body.username
         user.getUserPedagang(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -174,9 +165,10 @@ module.exports = {
                 console.log(error)
             })
     },
-    getUserPedagang: (res, req) => {
-        const username = req.params.username
-        user.getUserPembeli((username))
+    getUserPembeli: (req,res) => {
+        console.log(req.body.username);
+        const username = req.body.username        
+        user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
                 miscHelper.response(res, result, 200)
@@ -184,5 +176,75 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
-    }
+    },
+    updateUserPedagang : (req,res)=>{
+        const username = req.params.username
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: process.env.NAME,
+                api_key: process.env.APIKEY,
+                api_secret: process.env.APISECRET
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
+
+        const dataPedagang = {
+            email: req.body.email,
+            nama: req.body.nama,
+            username: req.body.username,
+            no_hp: req.body.no,
+            foto: 'await geturl()',
+        }
+        user.updateUserPedagang(username,dataPedagang)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    updateUserPembeli : (req,res)=>{
+        const username = req.params.username
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: process.env.NAME,
+                api_key: process.env.APIKEY,
+                api_secret: process.env.APISECRET
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
+
+        const dataPembeli = {
+            email: req.body.email,
+            nama: req.body.nama,
+            username: req.body.username,
+            no_hp: req.body.no,
+            foto: 'await geturl()',
+        }
+        user.updateUserPembeli(username,dataPembeli)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
 }

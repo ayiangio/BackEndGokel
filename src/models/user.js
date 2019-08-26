@@ -2,17 +2,6 @@ require('dotenv').config()
 const connection = require('../config/db')
 
 module.exports = {
-    // getUserByUsername: (username) => {
-    //     return new Promise((resolve, reject) => {
-    //         connection.query('SELECT * FROM user WHERE username = ?', username, (err, result) => {
-    //             if (!err) {
-    //                 resolve(result)
-    //             } else {
-    //                 reject(new Error(err))
-    //             }
-    //         })
-    //     })
-    // },
     registerPembeli: (dataUser, dataPembeli) => {
         // console.log("user ",dataUser)
         // console.log("pembeli ",dataPembeli)
@@ -70,6 +59,28 @@ module.exports = {
     getUserPedagang: (username) => {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM pedagang WHERE username = ?', username, (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+    updateUserPedagang: (username,data) => {
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE pedagang SET ? where username = ?',[data, username], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+    updateUserPembeli: (username,data) => {
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE pembeli SET ? where username = ?',[data, username], (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
