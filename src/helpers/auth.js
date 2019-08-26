@@ -6,10 +6,7 @@ const allowedAccess = process.env.REQUEST_HEADERS || 'khusni'
 module.exports = {
     authInfo: (req, res, next) => {
         const headerAuth = req.headers['authorization']
-        const headerSecret = req.headers['x-access-token']
-        console.log('headerAuth '+headerAuth);
-        console.log('allowedAccess11 '+allowedAccess);
-        
+        const headerSecret = req.headers['x-access-token']        
         if (headerAuth !== allowedAccess) {
           return MiscHelper.response(res, null, 401, 'Unauthorized, Need authentication !')
         } else if (typeof headerSecret === 'undefined') { 
@@ -24,7 +21,7 @@ module.exports = {
       },
     
       accesstoken: (req, res, next) => {
-        const secretKey = process.env.SECRET_KEY || 'indonesiakutanahtumpahdarahku'
+        const secretKey = process.env.SECRET_KEY 
         const accessToken = req.token
         console.log(req.token);
         const userToken = req.headers['x-control-user']
