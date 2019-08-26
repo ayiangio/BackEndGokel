@@ -11,7 +11,7 @@ const userRouter = require('./src/routes/user');
 const logger = require('morgan')
 app.use(
 	bodyPraser.urlencoded({
-		extended: false
+		extended: true
 	})
 );
 
