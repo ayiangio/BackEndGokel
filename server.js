@@ -15,7 +15,7 @@ app.use(
 	})
 );
 
-app.use(Cors())
+// app.use(Cors())
 app.use(bodyPraser.json());
 app.listen(port);
 app.use(xssFilter())

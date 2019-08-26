@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const MiscHelper = require('../helpers/response')
 
-const allowedAccess = process.env.REQUEST_HEADERS || 'khusni'
+const allowedAccess = process.env.REQUEST_HEADERS
 
 module.exports = {
     authInfo: (req, res, next) => {
@@ -15,7 +15,7 @@ module.exports = {
           const bearerToken = headerSecret.split(' ')
           const token = bearerToken[1]
           req.token = token
-          console.log('Token stored!' + token)
+        //   console.log('Token stored!' + token)
           next()
         }
       },
