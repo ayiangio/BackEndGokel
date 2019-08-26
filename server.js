@@ -11,11 +11,11 @@ const userRouter = require('./src/routes/user');
 const logger = require('morgan')
 app.use(
 	bodyPraser.urlencoded({
-		extended: false
+		extended: true
 	})
 );
 
-app.use(Cors())
+// app.use(Cors())
 app.use(bodyPraser.json());
 app.listen(port);
 app.use(xssFilter())
