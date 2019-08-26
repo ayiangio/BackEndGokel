@@ -67,6 +67,17 @@ module.exports = {
             })
         })
     },
+  updateToken: (username, token) => {
+        return new Promise((resolve, reject) => {
+            connection.query(`UPDATE user SET token = ? WHERE email =?`, [token, username], (err, result) => {
+                if (!err) {
+                   resolve(result)
+                } else {
+                   reject(new Error(err))
+                }
+              })
+          })
+    },
     updateUserPedagang: (username,data) => {
         return new Promise((resolve, reject) => {
             connection.query('UPDATE pedagang SET ? where username = ?',[data, username], (err, result) => {
@@ -87,7 +98,8 @@ module.exports = {
                     reject(new Error(err))
                 }
             })
-        })
+        
     },
+    
     
 }

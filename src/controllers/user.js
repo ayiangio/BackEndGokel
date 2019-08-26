@@ -19,7 +19,6 @@ module.exports = {
                 fs.unlinkSync(path)
                 data = result.url
             })
-
             return data
         }
 
@@ -55,12 +54,10 @@ module.exports = {
                             return miscHelper.response(res, null, 401, "Email Not Avaliable !!!")
                         })
                 }
-
             })
             .catch((error) => {
                 console.log(error)
             })
-
     },
     registerPedagang: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
@@ -78,7 +75,6 @@ module.exports = {
                 fs.unlinkSync(path)
                 data = result.url
             })
-
             return data
         }
 
@@ -118,12 +114,10 @@ module.exports = {
                             return miscHelper.response(res, null, 404, "Email Not Avaliable !!!")
                         })
                 }
-
             })
             .catch((error) => {
                 console.log(error)
             })
-
     },
     login: (req, res) => {
         const username = req.body.username
@@ -139,10 +133,17 @@ module.exports = {
                         idUser: dataUser.idUser
                     }, process.env.SECRET_KEY, {
                             expiresIn: '120h'
-                        })
+                    })
 
                     delete dataUser.salt
                     delete dataUser.password
+                    user.updateToken(username, dataUser.token)
+                    .then((result) => {
+                        console.log(result)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
                     return miscHelper.response(res, dataUser, 200)
                 } else {
                     return miscHelper.response(res, null, 403, "Wrong Password !!!")
@@ -153,6 +154,7 @@ module.exports = {
                 return miscHelper.response(res, null, 403, "Email Not Register !!!")
             })
     },
+
     getUserPedagang: (req,res) => {
         console.log(req.body.username)
         const username = req.body.username

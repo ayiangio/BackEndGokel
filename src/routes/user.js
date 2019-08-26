@@ -5,7 +5,6 @@ const Auth = require('../helpers/auth')
 
 router
     .all('/*', Auth.authInfo)
-    // .get('/', userController.getUserById)
     .post('/register/pembeli', userController.registerPembeli)
     .post('/register/pedagang', userController.registerPedagang)
     .post('/login', userController.login)
