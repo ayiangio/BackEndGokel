@@ -3,9 +3,10 @@ const express = require('express');
 const app = express();
 const Cors = require('cors')
 const xssFilter = require('x-xss-protection')
-const port = process.env.PORT || 1010
+const port = process.env.PORT || 3333
 const bodyPraser = require('body-parser')
-// const user = require('./routes/user');
+
+const userRouter = require('./src/routes/user');
 // const score = require('./routes/score');
 const logger = require('morgan')
 app.use(
@@ -21,6 +22,10 @@ app.use(xssFilter())
 console.log('Connect Succes On '+port);
 app.use(logger('dev'))
 app.use(logger('dev'))
+
+app.use('/user', userRouter)
+
+
 
 //Route to endpoint
 // user(app);
