@@ -5,9 +5,8 @@ const Auth = require('../helpers/auth')
 
 router
     .all('/*', Auth.authInfo)
-    .get('/', userController.getUserByPedagang)
-    .get('/pedagang/:username', userController.getUserByPedagang)
-    
-    
+    .post('/register/pembeli', userController.registerPembeli)
+    .post('/register/pedagang', userController.registerPedagang)
+    .post('/login', userController.login)
 
 module.exports = router
