@@ -7,6 +7,7 @@ const port = process.env.PORT || 3333
 const bodyPraser = require('body-parser')
 //const config = require('config-yml')
 const userRouter = require('./src/routes/user');
+const transaksiRouter = require('./src/routes/transaksi');
 // const score = require('./routes/score');
 const logger = require('morgan')
 app.use(
@@ -26,7 +27,7 @@ app.use(logger('dev'))
 app.use(logger('dev'))
 
 app.use('/user', userRouter)
-
+app.use('/transaksi', transaksiRouter)
 
 
 //Route to endpoint
