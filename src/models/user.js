@@ -69,7 +69,18 @@ module.exports = {
     },
     updateToken: (username, token) => {
         return new Promise((resolve, reject) => {
-            connection.query(`UPDATE user SET token = ? WHERE email =?`, [token, username], (err, result) => {
+            connection.query(`UPDATE user SET token = ? WHERE username =?`, [token, username], (err, result) => {
+                if (!err) {
+                   resolve(result)
+                } else {
+                   reject(new Error(err))
+                }
+              })
+          })
+    },
+    updateUserPedagang: (username,data) => {
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE pedagang SET ? where username = ?',[data, username], (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -78,9 +89,20 @@ module.exports = {
             })
         })
     },
-    getUserPedagangByCategory: (username) => {
+    updateUserPembeli: (username,data) => {
         return new Promise((resolve, reject) => {
-            connection.query(`SELECT id_pedagang, nama, username FROM pedagang INNER JOIN kategori ON pedagang.id_category = kategori.id_category where username = ?`, username, (err, result) => {
+            connection.query('UPDATE pembeli SET ? where username = ?',[data, username], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+    getUserByCategory: (id_category) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM pedagang WHERE id_category = ?', id_category, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
