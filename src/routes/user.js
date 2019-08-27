@@ -14,6 +14,6 @@ router
     .patch('/pembeli/:username', userController.updateUserPembeli)
     .patch('/pedagang/:username', userController.updateUserPedagang)
     .get('/pedagang/:id_category', userController.getUserByCategory)
-    .get('/detailpedagang/:username', userController.getDetailPedagang)
+    .get('/detailpedagang', userController.getDetailPedagang)
 
 module.exports = router
