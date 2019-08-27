@@ -110,5 +110,16 @@ module.exports = {
                 }
             })
         })
+    },
+    getDetailPedagang: (username) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT pedagang.nama, pedagang.no_hp, pedagang.stok, pedagang.foto, pedagang.harga, jajan.nama_jajan, kategori.nama_kategori FROM pedagang INNER JOIN jajan ON pedagang.id_jajan = jajan.id_jajan INNER JOIN kategori ON jajan.id_category = kategori.id_category WHERE pedagang.username = ?', username, (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
     }
 }
