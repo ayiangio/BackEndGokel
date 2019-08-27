@@ -30,5 +30,6 @@ router
     .patch('/pedagang/:username',upload.single('foto'), userController.updateUserPedagang)
     .get('/pedagang/:id_category', userController.getUserByCategory)
     .get('/detailpedagang/:username', userController.getDetailPedagang)
+    .patch('/updatesaldo/:username',userController.updateSaldo)
 
 module.exports = router
