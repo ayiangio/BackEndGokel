@@ -8,7 +8,7 @@ const multer = require('multer');
         destination: function (req, file, cb) {
             console.log('masuk dest');
             
-			cb(null, '../uploads/images')
+			cb(null, 'uploads/images')
 		},
 		filename: function (req, file, cb) {
             console.log('masuk doang');
@@ -24,11 +24,11 @@ router
     .post('/register/pembeli', userController.registerPembeli)
     .post('/register/pedagang', userController.registerPedagang)
     .post('/login', userController.login)
-    .get('/pedagang', userController.getUserPedagang)
-    .get('/pembeli', userController.getUserPembeli)
-    .patch('/pembeli/:username', userController.updateUserPembeli)
-    .patch('/pedagang/:username', userController.updateUserPedagang)
+    .get('/pedagang/:username', userController.getUserPedagang)
+    .get('/pembeli/:username', userController.getUserPembeli)
+    .patch('/pembeli/:username',upload.single('image'), userController.updateUserPembeli)
+    .patch('/pedagang/:username',upload.single('image'), userController.updateUserPedagang)
     .get('/pedagang/:id_category', userController.getUserByCategory)
-    .get('/detailpedagang', userController.getDetailPedagang)
+    .get('/detailpedagang/:username', userController.getDetailPedagang)
 
 module.exports = router

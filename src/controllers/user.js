@@ -1,7 +1,7 @@
 const user = require('../models/user')
 const miscHelper = require('../helpers/response')
 const jwt = require('jsonwebtoken')
-
+const cloudinary = require('cloudinary')
 module.exports = {
     registerPembeli: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
@@ -125,7 +125,7 @@ module.exports = {
 
     getUserPedagang: (req,res) => {
         console.log(req.body.username)
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPedagang(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -137,7 +137,7 @@ module.exports = {
     },
     getUserPembeli: (req, res) => {
         console.log(req.body.username);
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -149,9 +149,9 @@ module.exports = {
     },
     updateUserPedagang: async (req, res) => {
         const username = req.params.username
-        // let path = req.file.path
+        let path = req.file.path
         console.log(req.file);
-        user.getUserPedagang((username))
+        // user.getUserPedagang((username))
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -174,7 +174,7 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: 'await geturl()',
+            foto: await geturl(),
         }
         user.updateUserPedagang(username, dataPedagang)
             .then((resultUser) => {
@@ -187,9 +187,9 @@ module.exports = {
     },
     updateUserPembeli: async (req, res) => {
         const username = req.params.username
-        console.log(req.file);
+        console.log(req.file.path);
         
-        // let path = req.file.path
+        let path = req.file.path
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -212,7 +212,7 @@ module.exports = {
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: 'await geturl()',
+            foto: await geturl(),
         }
         user.updateUserPembeli(username, dataPembeli)
             .then((resultUser) => {
@@ -236,7 +236,7 @@ module.exports = {
             })
     },
     getDetailPedagang : (req, res) => {
-        const username = req.body.username
+        const username = req.params.username
         console.log(req.body.username)
         user.getDetailPedagang(username)
             .then((resultUser) => {
