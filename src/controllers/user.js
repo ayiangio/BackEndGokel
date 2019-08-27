@@ -126,7 +126,7 @@ module.exports = {
 
     getUserPedagang: (req,res) => {
         console.log(req.body.username)
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPedagang(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -138,7 +138,7 @@ module.exports = {
     },
     getUserPembeli: (req, res) => {
         console.log(req.body.username);
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -148,86 +148,81 @@ module.exports = {
                 console.log(error)
             })
     },
-    // updateUserPedagang: async (req, res) => {
-    //     const username = req.params.username
-    //     // let path = req.file.path
-    //     console.log(req.file);
-    //     user.getUserPedagang((username))
-    //     let geturl = async (req) => {
-    //         cloudinary.config({
-    //             cloud_name: process.env.NAME,
-    //             api_key: process.env.APIKEY,
-    //             api_secret: process.env.APISECRET
-    //         })
+    updateUserPedagang: async (req, res) => {
+        const username = req.params.username
+        let path = req.file.path
+        console.log(req.file);
+        // user.getUserPedagang((username))
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: process.env.NAME,
+                api_key: process.env.APIKEY,
+                api_secret: process.env.APISECRET
+            })
 
-    //         let data
-    //         await cloudinary.uploader.upload(path, (result) => {
-    //             const fs = require('fs')
-    //             fs.unlinkSync(path)
-    //             data = result.url
-    //         })
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
 
-    //         return data
-    //     }
+            return data
+        }
 
-    //     const dataPedagang = {
-    //         email: req.body.email,
-    //         nama: req.body.nama,
-    //         username: req.body.username,
-    //         no_hp: req.body.no,
-    //         foto: 'await geturl()',
-    //     }
-    //     user.updateUserPedagang(username, dataPedagang)
-    //         .then((resultUser) => {
-    //             const result = resultUser
-    //             miscHelper.response(res, result, 200)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // },
+        const dataPedagang = {
+            email: req.body.email,
+            nama: req.body.nama,
+            username: req.body.username,
+            no_hp: req.body.no,
+            foto: await geturl(),
+        }
+        user.updateUserPedagang(username, dataPedagang)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
     updateUserPembeli: async (req, res) => {
         let path = req.file.path
         console.log(req.file.path)
         const username = req.params.username
-        console.log(req.body);
         
-        // console.log(req.file);            
-        // let geturl = async (req) => {
-        //     cloudinary.config({
-        //         cloud_name: 'dwv9umye9',
-        //         api_key: '814525311932543',
-        //         api_secret:'wiWIl-Goh-Ll1XLceh71lQoBqfw'
-        //     })
+        // let path = req.file.path
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: process.env.NAME,
+                api_key: process.env.APIKEY,
+                api_secret: process.env.APISECRET
+            })
 
-        //     let data
-        //     await cloudinary.uploader.upload(path, (result) => {
-        //         const fs = require('fs')
-        //         fs.unlinkSync(path)
-        //         data = result.url
-        //     })
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
 
-        //     return data
-        // }
-
-        // const dataPembeli = {
-        //     email: req.body.email,
-        //     nama: req.body.nama,
-        //     username: req.body.username,
-        //     no_hp: req.body.no,
-        //     foto: 'await geturl()',
-        // }
-
-        // console.log(dataPembeli)
-
-        // user.updateUserPembeli(username, dataPembeli)
-        //     .then((resultUser) => {
-        //         const result = resultUser
-        //         miscHelper.response(res, result, 200, [username, dataPembeli])
-        //     })
-        //     .catch((error) => {
-        //         console.log('error multer' + error)
-        //     })
+            return data
+        }
+        const dataPembeli = {
+            email: req.body.email,
+            nama: req.body.nama,
+            username: req.body.username,
+            no_hp: req.body.no,
+            foto: await geturl(),
+        }
+        user.updateUserPembeli(username, dataPembeli)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     },
     getUserByCategory : (req, res) => {
         const id_category = req.params.id_category
@@ -242,7 +237,7 @@ module.exports = {
             })
     },
     getDetailPedagang : (req, res) => {
-        const username = req.body.username
+        const username = req.params.username
         console.log(req.body.username)
         user.getDetailPedagang(username)
             .then((resultUser) => {
