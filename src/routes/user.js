@@ -4,12 +4,7 @@ const userController = require('../controllers/user')
 const Auth = require('../helpers/auth')
 const multer = require('multer');
 
-	const storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            console.log('masuk dest');
-            
-			cb(null, 'uploads/images')
-		},
+	const storage = multer.diskStorage({        
 		filename: function (req, file, cb) {
             console.log('masuk doang');
 
