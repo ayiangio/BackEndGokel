@@ -7,7 +7,9 @@ Route
 
     .all('/*', Auth.authInfo)
     .post('/', transaksi.postTransaksi)
-    .get('/transaksipembeli', transaksi.detailTransaksiPembeli)
-    .get('/transaksipenjual', transaksi.detailTransaksiPenjual)
+    .patch('/update', transaksi.updateTransaksi)
+    .delete('/delete', transaksi.deleteTransaksi)
+    .get('/transaksipembeli/:username', transaksi.detailTransaksiPembeli)
+    .get('/transaksipedagang/:username', transaksi.detailTransaksiPenjual)
 
 module.exports = Route

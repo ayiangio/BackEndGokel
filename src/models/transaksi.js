@@ -19,7 +19,7 @@ module.exports = {
     },
     detailTransaksiPembeli: (username) =>  {  
         return new Promise((resolve, reject) => {
-            connection.query('SELECT transaksi.jumlah, transaksi.total_harga, transaksi.status, pembeli.nama, pembeli.no_hp FROM transaksi INNER JOIN pembeli ON transaksi.username = pembeli.username WHERE transaksi.username = ?', username, (err, result) => {
+            connection.query('SELECT jumlah, total_harga, status, username_pedagang as pedagang FROM transaksi  WHERE username_pembeli = ?', username, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -30,7 +30,7 @@ module.exports = {
     },
     detailTransaksiPenjual: (username) =>  {  
         return new Promise((resolve, reject) => {
-            connection.query('SELECT transaksi.jumlah, transaksi.total_harga, transaksi.status, pedagang.nama, pedagang.no_hp FROM transaksi INNER JOIN pedagang ON transaksi.username = pedagang.username WHERE transaksi.username = ?', username, (err, result) => {
+            connection.query('SELECT jumlah, total_harga, status, username_pembeli as pembeli FROM transaksi  WHERE username_pedagang = ?', username, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -38,5 +38,30 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+    updateTransaksi: (username_pembeli,username_pedagang,data)=>{
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE transaksi SET ? where username_pembeli = ? and username_pedagang = ? and status = 0', [data,username_pembeli,username_pedagang], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+    deleteTransaksi: (username_pembeli,username_pedagang)=>{
+
+        console.log(username_pembeli);
+        console.log(username_pedagang);
+        return new Promise((resolve, reject) => {
+            connection.query('DELETE FROM transaksi where username_pembeli = ? and username_pedagang = ? and status = 0', [username_pembeli,username_pedagang], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
 }
