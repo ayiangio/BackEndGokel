@@ -246,5 +246,18 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
+    },
+    updateSaldo : (req, res) => {
+        const username = req.params.username
+        const saldo = req.body.saldo
+        console.log(username)
+        user.updateSaldo(username,saldo)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 }
