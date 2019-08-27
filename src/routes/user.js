@@ -26,8 +26,8 @@ router
     .post('/login', userController.login)
     .get('/pedagang/:username', userController.getUserPedagang)
     .get('/pembeli/:username', userController.getUserPembeli)
-    .patch('/pembeli/:username',upload.single('image'), userController.updateUserPembeli)
-    .patch('/pedagang/:username',upload.single('image'), userController.updateUserPedagang)
+    .patch('/pembeli/:username',upload.single('foto'), userController.updateUserPembeli)
+    .patch('/pedagang/:username',upload.single('foto'), userController.updateUserPedagang)
     .get('/pedagang/:id_category', userController.getUserByCategory)
     .get('/detailpedagang/:username', userController.getDetailPedagang)
 
