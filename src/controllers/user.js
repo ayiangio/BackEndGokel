@@ -122,8 +122,8 @@ module.exports = {
                 return miscHelper.response(res, null, 403, "Email Not Register !!!")
             })
     },
-    getUserPedagang: (req, res) => {
 
+    getUserPedagang: (req,res) => {
         console.log(req.body.username)
         const username = req.body.username
         user.getUserPedagang(username)
@@ -149,9 +149,9 @@ module.exports = {
     },
     updateUserPedagang: async (req, res) => {
         const username = req.params.username
-        let path = req.file.path
+        // let path = req.file.path
         console.log(req.file);
-
+        user.getUserPedagang((username))
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -189,7 +189,7 @@ module.exports = {
         const username = req.params.username
         console.log(req.file);
         
-        let path = req.file.path
+        // let path = req.file.path
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -223,4 +223,28 @@ module.exports = {
                 console.log(error)
             })
     },
+    getUserByCategory : (req, res) => {
+        const id_category = req.params.id_category
+        console.log(id_category)
+        user.getUserByCategory(id_category)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    getDetailPedagang : (req, res) => {
+        const username = req.body.username
+        console.log(req.body.username)
+        user.getDetailPedagang(username)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 }
