@@ -24,11 +24,11 @@ router
     .post('/register/pembeli', userController.registerPembeli)
     .post('/register/pedagang', userController.registerPedagang)
     .post('/login', userController.login)
-    .get('/pedagang', userController.getUserPedagang)
-    .get('/pembeli', userController.getUserPembeli)
+    .get('/pedagang/:username', userController.getUserPedagang)
+    .get('/pembeli/:username', userController.getUserPembeli)
     .patch('/pembeli/:username', userController.updateUserPembeli)
     .patch('/pedagang/:username', userController.updateUserPedagang)
     .get('/pedagang/:id_category', userController.getUserByCategory)
-    .get('/detailpedagang', userController.getDetailPedagang)
+    .get('/detailpedagang/:username', userController.getDetailPedagang)
 
 module.exports = router

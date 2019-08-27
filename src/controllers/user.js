@@ -125,7 +125,7 @@ module.exports = {
 
     getUserPedagang: (req,res) => {
         console.log(req.body.username)
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPedagang(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -137,7 +137,7 @@ module.exports = {
     },
     getUserPembeli: (req, res) => {
         console.log(req.body.username);
-        const username = req.body.username
+        const username = req.params.username
         user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
@@ -236,7 +236,7 @@ module.exports = {
             })
     },
     getDetailPedagang : (req, res) => {
-        const username = req.body.username
+        const username = req.params.username
         console.log(req.body.username)
         user.getDetailPedagang(username)
             .then((resultUser) => {
