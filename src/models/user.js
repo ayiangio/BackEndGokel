@@ -67,9 +67,9 @@ module.exports = {
             })
         })
     },
-  updateToken: (username, token) => {
+    updateToken: (username, token) => {
         return new Promise((resolve, reject) => {
-            connection.query(`UPDATE user SET token = ? WHERE email =?`, [token, username], (err, result) => {
+            connection.query(`UPDATE user SET token = ? WHERE username =?`, [token, username], (err, result) => {
                 if (!err) {
                    resolve(result)
                 } else {
@@ -98,8 +98,28 @@ module.exports = {
                     reject(new Error(err))
                 }
             })
-        
+        })
     },
-    
-    
+    getUserByCategory: (id_category) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM pedagang WHERE id_category = ?', id_category, (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+    getDetailPedagang: (username) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT pedagang.nama, pedagang.no_hp, pedagang.stok, pedagang.foto, pedagang.harga, jajan.nama_jajan, kategori.nama_kategori FROM pedagang INNER JOIN jajan ON pedagang.id_jajan = jajan.id_jajan INNER JOIN kategori ON jajan.id_category = kategori.id_category WHERE pedagang.username = ?', username, (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    }
 }
