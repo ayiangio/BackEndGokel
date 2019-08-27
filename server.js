@@ -18,7 +18,8 @@ app.use(
 
 app.use(Cors())
 app.use(bodyPraser.json());
-// app.use(express.static(__dirname + './uploads'))
+// app.use(express.static(__dirname + '/uploads/images'))
+// app.use(express.static(__dirname + 'uploads'))
 app.listen(port);
 app.use(xssFilter())
 console.log('Connect Succes On '+port);
