@@ -5,7 +5,7 @@ const Cors = require('cors')
 const xssFilter = require('x-xss-protection')
 const port = process.env.PORT || 3333
 const bodyPraser = require('body-parser')
-
+//const config = require('config-yml')
 const userRouter = require('./src/routes/user');
 // const score = require('./routes/score');
 const logger = require('morgan')
@@ -17,6 +17,7 @@ app.use(
 
 app.use(Cors())
 app.use(bodyPraser.json());
+//console.log(config.app.url)
 // app.use(express.static(__dirname + './uploads'))
 app.listen(port);
 app.use(xssFilter())
