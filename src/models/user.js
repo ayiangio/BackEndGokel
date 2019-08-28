@@ -121,6 +121,17 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+    updateSaldo: (username,saldo) => {
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE pedagang SET saldo = ? where username = ?',[saldo, username], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
     
 }

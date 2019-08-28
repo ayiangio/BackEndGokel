@@ -56,7 +56,9 @@ module.exports = {
             id_jajan: req.body.id_jajan,
             id_category: req.body.id_category,
             stok: 0,
-            harga: 0
+            harga: 0,
+            saldo: 0,
+            password: req.body.password,
         }
         const dataUser = {
             username: req.body.username,
@@ -240,6 +242,19 @@ module.exports = {
         const username = req.params.username
         console.log(req.body.username)
         user.getDetailPedagang(username)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    updateSaldo : (req, res) => {
+        const username = req.params.username
+        const saldo = req.body.saldo
+        console.log(username)
+        user.updateSaldo(username,saldo)
             .then((resultUser) => {
                 const result = resultUser
                 miscHelper.response(res, result, 200)
