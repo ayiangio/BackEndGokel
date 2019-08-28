@@ -236,6 +236,16 @@ module.exports = {
                 console.log(error)
             })
     },
+    getAllJajan: (req, res) => {
+        user.getAllJajan()
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
     getDetailPedagang: (req, res) => {
         const username = req.params.username
         console.log(req.body.username)

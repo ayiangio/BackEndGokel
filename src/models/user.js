@@ -134,5 +134,15 @@ module.exports = {
             })
         })
     },
-    
+    getAllJajan: () => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM jajan', (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
 }
