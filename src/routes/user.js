@@ -26,7 +26,7 @@ router
     .get('/pembeli/:username',Chace.getChace, userController.getUserPembeli)
     .patch('/pembeli/:username',Chace.delChace, upload.single('foto'), userController.updateUserPembeli)
     .patch('/pedagang/:username', upload.single('foto'), userController.updateUserPedagang)
-    .get('/pedagang/kategori/:id_category',  Chace.getChace,userController.getUserByCategory)
+    .get('/pedagang/kategori/:id_category', userController.getUserByCategory)
     .get('/detailpedagang/:username',userController.getDetailPedagang)
     .patch('/updatesaldo/:username', userController.updateSaldo)
     .get('/jajan', userController.getAllJajan)
