@@ -47,6 +47,7 @@ module.exports = {
     registerPedagang: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
         const passHash = miscHelper.setPass(req.body.password, salt)
+        console.log(req.body)
         const dataPedagang = {
             email: req.body.email,
             nama: req.body.nama,
@@ -57,8 +58,8 @@ module.exports = {
             id_category: req.body.id_category,
             stok: 0,
             harga: 0,
-            saldo: 0,
-            password: req.body.password,
+            saldo: 0
+
         }
         const dataUser = {
             username: req.body.username,
@@ -104,17 +105,17 @@ module.exports = {
                         idUser: dataUser.idUser
                     }, process.env.SECRET_KEY, {
                             expiresIn: '120h'
-                    })
+                        })
 
                     delete dataUser.salt
                     delete dataUser.password
                     user.updateToken(username, dataUser.token)
-                    .then((result) => {
-                        console.log(result)
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    })
+                        .then((result) => {
+                            console.log(result)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
                     return miscHelper.response(res, dataUser, 200)
                 } else {
                     return miscHelper.response(res, null, 403, "Wrong Password !!!")
@@ -126,7 +127,7 @@ module.exports = {
             })
     },
 
-    getUserPedagang: (req,res) => {
+    getUserPedagang: (req, res) => {
         console.log(req.body.username)
         const username = req.params.username
         user.getUserPedagang(username)
@@ -192,8 +193,6 @@ module.exports = {
         let path = req.file.path
         console.log(req.file.path)
         const username = req.params.username
-        
-        // let path = req.file.path
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -226,7 +225,7 @@ module.exports = {
                 console.log(error)
             })
     },
-    getUserByCategory : (req, res) => {
+    getUserByCategory: (req, res) => {
         const id_category = req.params.id_category
         console.log(id_category)
         user.getUserByCategory(id_category)
@@ -238,7 +237,7 @@ module.exports = {
                 console.log(error)
             })
     },
-    getDetailPedagang : (req, res) => {
+    getDetailPedagang: (req, res) => {
         const username = req.params.username
         console.log(req.body.username)
         user.getDetailPedagang(username)
@@ -250,11 +249,11 @@ module.exports = {
                 console.log(error)
             })
     },
-    updateSaldo : (req, res) => {
+    updateSaldo: (req, res) => {
         const username = req.params.username
         const saldo = req.body.saldo
         console.log(username)
-        user.updateSaldo(username,saldo)
+        user.updateSaldo(username, saldo)
             .then((resultUser) => {
                 const result = resultUser
                 miscHelper.response(res, result, 200)
