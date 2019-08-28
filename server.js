@@ -10,12 +10,20 @@ const userRouter = require('./src/routes/user');
 const transaksiRouter = require('./src/routes/transaksi');
 // const score = require('./routes/score');
 const logger = require('morgan')
+
+const redis = require('redis')
+const REDIS_PORT = process.env.PORT_REDIST || 6379
+const client = redis.createClient(REDIS_PORT)
+
+
 app.use(
 	bodyPraser.urlencoded({
 		extended: true
 	})
 );
-
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
 app.use(Cors())
 app.use(bodyPraser.json());
 

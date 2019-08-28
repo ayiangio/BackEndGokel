@@ -3,6 +3,8 @@ const miscHelper = require('../helpers/response')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary')
 
+const Chace = require('../helpers/chace')
+
 module.exports = {
     registerPembeli: async (req, res) => {
         const salt = miscHelper.getRandomSalt(25)
@@ -133,6 +135,7 @@ module.exports = {
         user.getUserPedagang(username)
             .then((resultUser) => {
                 const result = resultUser
+                // Chace.setChace('getPendagang',result)
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -145,6 +148,7 @@ module.exports = {
         user.getUserPembeli(username)
             .then((resultUser) => {
                 const result = resultUser
+                Chace.setChace('pembeli',result)
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -231,6 +235,7 @@ module.exports = {
         user.getUserByCategory(id_category)
             .then((resultUser) => {
                 const result = resultUser
+                // Chace.setChace('getKategori',result)
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -241,6 +246,7 @@ module.exports = {
         user.getAllJajan()
             .then((resultUser) => {
                 const result = resultUser
+                // Chace.setChace('getJajan',result)
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -271,5 +277,16 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
+    },
+    getAllPedagang: (req, res) => {
+        user.getAllPedagang()
+        .then((resultUser) => {
+            const result = resultUser
+            // Chace.setChace('getJajan',result)
+            miscHelper.response(res, result, 200)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 }
