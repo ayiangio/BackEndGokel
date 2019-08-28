@@ -190,7 +190,6 @@ module.exports = {
     updateUserPembeli: async (req, res) => {
         const username = req.params.username
         console.log(req.file.path);
-
         let path = req.file.path
         let geturl = async (req) => {
             cloudinary.config({
@@ -227,7 +226,7 @@ module.exports = {
     },
     getUserByCategory: (req, res) => {
         const id_category = req.params.id_category
-        console.log(id_category)
+        console.log(req.params)
         user.getUserByCategory(id_category)
             .then((resultUser) => {
                 const result = resultUser

@@ -102,7 +102,8 @@ module.exports = {
     },
     getUserByCategory: (id_category) => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM pedagang WHERE id_category = ?', id_category, (err, result) => {
+            connection.query(`SELECT pedagang.nama, pedagang.username, pedagang.foto, kategori.nama_kategori as kategori, jajan.nama_jajan as jajan,pedagang.harga,  pedagang.stok FROM pedagang INNER JOIN kategori ON pedagang.id_category = kategori.id_category INNER JOIN jajan ON kategori.id_category = jajan.id_jajan
+            WHERE pedagang.id_category = ?`, id_category, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
