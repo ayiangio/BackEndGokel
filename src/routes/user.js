@@ -27,5 +27,6 @@ router
     .get('/pedagang/kategori/:id_category', userController.getUserByCategory)
     .get('/detailpedagang/:username', userController.getDetailPedagang)
     .patch('/updatesaldo/:username',userController.updateSaldo)
+    .get('/jajan',userController.getAllJajan)
 
 module.exports = router
