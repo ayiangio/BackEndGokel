@@ -2,6 +2,7 @@ const user = require('../models/user')
 const miscHelper = require('../helpers/response')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary')
+
 const Chace = require('../helpers/chace')
 
 module.exports = {
@@ -60,6 +61,7 @@ module.exports = {
             stok: 0,
             harga: 0,
             saldo: 0
+
         }
         const dataUser = {
             username: req.body.username,
@@ -193,8 +195,8 @@ module.exports = {
     },
     updateUserPembeli: async (req, res) => {
         const username = req.params.username
-        console.log(req.file.path);
         let path = req.file.path
+        // const username = req.params.username
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -211,7 +213,6 @@ module.exports = {
 
             return data
         }
-
         const dataPembeli = {
             email: req.body.email,
             nama: req.body.nama,
@@ -276,5 +277,16 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
+    },
+    getAllPedagang: (req, res) => {
+        user.getAllPedagang()
+        .then((resultUser) => {
+            const result = resultUser
+            // Chace.setChace('getJajan',result)
+            miscHelper.response(res, result, 200)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 }
