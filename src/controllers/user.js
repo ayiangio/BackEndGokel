@@ -157,8 +157,15 @@ module.exports = {
     },
     updateUserPedagang: async (req, res) => {
         const username = req.params.username
-        let path = req.file.path
-        console.log(req.file);
+        let path = null
+        let alamat = null
+        // console.log(req.file);
+        if (req.file == undefined){
+            alamat = req.body.foto
+        }
+        else {
+            path =req.file.path
+        }
         // user.getUserPedagang((username))
         let geturl = async (req) => {
             cloudinary.config({
@@ -177,12 +184,19 @@ module.exports = {
             return data
         }
 
+        let photo = null 
+        if (req.file === undefined){
+            photo  = alamat
+        }
+        else{
+            photo = await geturl()
+        }
         const dataPedagang = {
             email: req.body.email,
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: await geturl(),
+            foto: photo,
         }
         user.updateUserPedagang(username, dataPedagang)
             .then((resultUser) => {
@@ -195,8 +209,14 @@ module.exports = {
     },
     updateUserPembeli: async (req, res) => {
         const username = req.params.username
-        let path = req.file.path
-        // const username = req.params.username
+        let path = null
+        let link = null
+        if (req.file == undefined){
+            link = req.body.foto
+        }
+        else {
+            path =req.file.path
+        }
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -213,12 +233,19 @@ module.exports = {
 
             return data
         }
+        let photo = null 
+        if (req.file === undefined){
+            photo  = link
+        }
+        else{
+            photo = await geturl()
+        }
         const dataPembeli = {
             email: req.body.email,
             nama: req.body.nama,
             username: req.body.username,
             no_hp: req.body.no,
-            foto: await geturl(),
+            foto: photo,
         }
         user.updateUserPembeli(username, dataPembeli)
             .then((resultUser) => {
