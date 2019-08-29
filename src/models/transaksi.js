@@ -50,6 +50,18 @@ module.exports = {
             })
         })
     },
+    konfirmasi: (username_pembeli,username_pedagang,saldo)=>{
+        return new Promise((resolve, reject) => {
+            connection.query('UPDATE transaksi SET status = 1 where username_pembeli = ? and username_pedagang = ? and status = 0', [username_pembeli,username_pedagang], (err, result) => {
+                if (!err) {
+                    connection.query(`UPDATE pedagang set saldo = ? where username = ? `,[saldo,username_pedagang])
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
     deleteTransaksi: (username_pembeli,username_pedagang)=>{
 
         console.log(username_pembeli);
