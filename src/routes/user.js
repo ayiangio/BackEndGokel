@@ -29,6 +29,7 @@ router
     .get('/pedagang/kategori/:id_category', userController.getUserByCategory)
     .get('/detailpedagang/:username',userController.getDetailPedagang)
     .patch('/updatesaldo/:username', userController.updateSaldo)
+    .patch('/updatestock/:username', userController.updateStock)
     .get('/jajan', userController.getAllJajan)
     .get('/pedagang', userController.getAllPedagang)
 
