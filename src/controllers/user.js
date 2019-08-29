@@ -202,7 +202,7 @@ module.exports = {
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
-                console.log(error)
+                return miscHelper.response(res, null, 403, "Email/Username Not Available !!!")
             })
     },
     updateUserPembeli: async (req, res) => {
@@ -252,7 +252,7 @@ module.exports = {
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
-                console.log(error)
+                return miscHelper.response(res, null, 403, "Email/Username Not Available !!!")                
             })
     },
     getUserByCategory: (req, res) => {
