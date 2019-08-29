@@ -53,9 +53,21 @@ module.exports = {
             username_pembeli: req.body.username_pembeli,
             jumlah: req.body.jumlah,
             total_harga: req.body.total_harga,
-            status :1
         }
         transaksi.updateTransaksi(username_pembeli, username_pedagang, data)
+            .then((resultTransaksi) => {
+                const result = resultTransaksi
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+    konfirmasi: (req, res) => {
+        const username_pedagang = req.body.username_pedagang
+        const username_pembeli = req.body.username_pembeli  
+        const saldo = req.body.saldo      
+        transaksi.konfirmasi(username_pembeli, username_pedagang,saldo)
             .then((resultTransaksi) => {
                 const result = resultTransaksi
                 miscHelper.response(res, result, 200)
