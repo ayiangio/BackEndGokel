@@ -156,10 +156,10 @@ module.exports = {
     updateUserPedagang: async (req, res) => {
         const username = req.params.username
         let path = null
-        let link = null
-        console.log(req.file);
+        let alamat = null
+        // console.log(req.file);
         if (req.file == undefined){
-            link = req.body.foto
+            alamat = req.body.foto
         }
         else {
             path =req.file.path
@@ -184,7 +184,7 @@ module.exports = {
 
         let photo = null 
         if (req.file === undefined){
-            photo  = req.body.foto
+            photo  = alamat
         }
         else{
             photo = await geturl()
@@ -209,7 +209,6 @@ module.exports = {
         const username = req.params.username
         let path = null
         let link = null
-        console.log(req.file);
         if (req.file == undefined){
             link = req.body.foto
         }
@@ -235,7 +234,7 @@ module.exports = {
 
         let photo = null 
         if (req.file === undefined){
-            photo  = req.body.foto
+            photo  = link
         }
         else{
             photo = await geturl()
