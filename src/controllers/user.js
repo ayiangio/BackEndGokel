@@ -2,6 +2,7 @@ const user = require('../models/user')
 const miscHelper = require('../helpers/response')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary')
+
 const Chace = require('../helpers/chace')
 
 module.exports = {
@@ -60,6 +61,7 @@ module.exports = {
             stok: 0,
             harga: 0,
             saldo: 0
+
         }
         const dataUser = {
             username: req.body.username,
@@ -231,7 +233,6 @@ module.exports = {
 
             return data
         }
-
         let photo = null 
         if (req.file === undefined){
             photo  = link
@@ -303,5 +304,16 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
+    },
+    getAllPedagang: (req, res) => {
+        user.getAllPedagang()
+        .then((resultUser) => {
+            const result = resultUser
+            // Chace.setChace('getJajan',result)
+            miscHelper.response(res, result, 200)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 }

@@ -26,8 +26,7 @@ client.on("error", function (err) {
 });
 app.use(Cors())
 app.use(bodyPraser.json());
-//console.log(config.app.url)
-// app.use(express.static(__dirname + './uploads'))
+
 app.listen(port);
 app.use(xssFilter())
 console.log('Connect Succes On '+port);

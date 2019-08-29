@@ -145,4 +145,15 @@ module.exports = {
             })
         })
     },
+    getAllPedagang: () => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT pedagang.username, pedagang.no_hp, pedagang.foto, pedagang.stok, pedagang.harga, kategori.nama_kategori FROM pedagang INNER JOIN kategori ON pedagang.id_category = kategori.id_category',  (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    }
 }

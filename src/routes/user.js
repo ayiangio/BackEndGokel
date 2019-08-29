@@ -7,7 +7,6 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         console.log('masuk doang');
-
         cb(null, file.originalname);
     }
 })
@@ -17,9 +16,10 @@ let upload = multer({ storage: storage, limits: { fileSize: 100000000 } })
 // Chace.getChace('getPembeli'),
 // Chace.getChace('getKategori'), 
 // function chace(req)
+
 router
     .all('/*', Auth.authInfo)
-    .post('/register/pembeli', Chace.delChace,userController.registerPembeli)
+    .post('/register/pembeli', Chace.delChace, userController.registerPembeli)
     .post('/register/pedagang', userController.registerPedagang)
     .post('/login', userController.login)
     .get('/pedagang/:username',  userController.getUserPedagang)
@@ -30,5 +30,6 @@ router
     .get('/detailpedagang/:username',userController.getDetailPedagang)
     .patch('/updatesaldo/:username', userController.updateSaldo)
     .get('/jajan', userController.getAllJajan)
+    .get('/pedagang', userController.getAllPedagang)
 
 module.exports = router
