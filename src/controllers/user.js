@@ -305,6 +305,22 @@ module.exports = {
                 console.log(error)
             })
     },
+    updateStock: (req, res) => {
+        const username = req.params.username        
+        const data = {
+            harga :req.body.harga,
+            stok : req.body.stok
+        }
+        console.log(data)
+        user.updateStock(username, data)
+            .then((resultUser) => {
+                const result = resultUser
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
     getAllPedagang: (req, res) => {
         user.getAllPedagang()
         .then((resultUser) => {
