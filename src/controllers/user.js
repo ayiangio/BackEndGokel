@@ -155,9 +155,15 @@ module.exports = {
     },
     updateUserPedagang: async (req, res) => {
         const username = req.params.username
-        let path = req.file.path
-        console.log(req.file);
-        
+        let path = null
+        let alamat = null
+        // console.log(req.file);
+        if (req.file == undefined){
+            alamat = req.body.foto
+        }
+        else {
+            path =req.file.path
+        }
         // user.getUserPedagang((username))
         let geturl = async (req) => {
             cloudinary.config({
@@ -178,7 +184,7 @@ module.exports = {
 
         let photo = null 
         if (req.file === undefined){
-            photo  = req.body.foto
+            photo  = alamat
         }
         else{
             photo = await geturl()
@@ -201,8 +207,14 @@ module.exports = {
     },
     updateUserPembeli: async (req, res) => {
         const username = req.params.username
-        console.log(req.file.path);
-        let path = req.file.path
+        let path = null
+        let link = null
+        if (req.file == undefined){
+            link = req.body.foto
+        }
+        else {
+            path =req.file.path
+        }
         let geturl = async (req) => {
             cloudinary.config({
                 cloud_name: process.env.NAME,
@@ -222,7 +234,7 @@ module.exports = {
 
         let photo = null 
         if (req.file === undefined){
-            photo  = req.body.foto
+            photo  = link
         }
         else{
             photo = await geturl()
